@@ -15,17 +15,17 @@ class ToDoItem {
         // create a checkbox
         let checkbox = document.createElement('input')
         checkbox.type = 'checkbox'
-        checkbox.id = this.id.toString();
         // create a p tag to hold the title
         let text = document.createElement('p');
         text.textContent = this.title;
         // create a delete button
         let deleteButton = document.createElement('img');
         deleteButton.src = './trash.webp';
-        deleteButton.on
+        // deleteButton.on
         // create a div to hold the above elements
         let container = document.createElement('div')
         container.className = 'todo-item';
+        container.id = this.id.toString();
         container.appendChild(checkbox);
         container.appendChild(text);
         container.appendChild(deleteButton);
@@ -69,9 +69,9 @@ class ToDoList {
     }
 
     update (id, updates) {
-        this.items.forEach( (item, index) => {
+        this.items.forEach( (item) => {
             if (item.id === id) {
-                item.update(updates);
+                item.updateDOMElement(updates);
             }
         })
     }
@@ -81,6 +81,14 @@ class ToDoList {
             if (!item.isRendered) {
                 this.element.appendChild(item.createDOMElement());
                 item.isRendered = true;
+            }
+        }
+    }
+
+    findElementById (id) {
+        for (let item of this.items) {
+            if (item.id == id) {
+                return item;
             }
         }
     }
@@ -102,36 +110,43 @@ document.querySelector('input[type="submit"]').addEventListener('click', (event)
     document.querySelector('input[id="title"]').value = '';
     document.querySelector('input[id="description"]').value = '';
 
+    // Add an event listener to the delete button on each TodoItem that calls the remove() method on the TodoList instance with the id of the clicked item.
     const deleteButtons = document.querySelectorAll('img');
 
-    // Add an event listener to the delete button on each TodoItem that calls the remove() method on the TodoList instance with the id of the clicked item.
     for (let button of deleteButtons) {
-        button.addEventListener('click', (event) => {
-            event.target.parentNode.style = "display:none";
+        button.addEventListener('click', () => {
+            let deleteButtonId = parseInt(button.parentElement.id);
+            todoList.removeElement(deleteButtonId);
+            button.parentNode.style = "display:none";
+            // todoList.render();
         })
     }
+
+    // Add an event listener to the checkbox on each TodoItem that calls the update() method on the TodoList instance with the id of the clicked item and sets the isCompleted property to the opposite of its current value.
+    const updateButtons = document.querySelectorAll('input[type="checkbox"]');
+
+    for (let button of updateButtons) {
+        button.addEventListener('click', () => {
+            let buttonId = parseInt(button.parentElement.id);
+            if (todoList.findElementById(buttonId).isCompleted) {
+                todoList.update(
+                    buttonId,
+                    {isCompleted: false}
+                )
+            } else {
+                todoList.update(
+                    buttonId,
+                    {isCompleted: true}
+                )
+            }
+            console.log(todoList.findElementById(buttonId))
+        })
+    }
+    
 })
 
 
-// Add an event listener to the delete button on each TodoItem that calls the remove() method on the TodoList instance with the id of the clicked item.
 
 
-// Add an event listener to the checkbox on each TodoItem that calls the update() method on the TodoList instance with the id of the clicked item and sets the isCompleted property to the opposite of its current value.
 
-// Implement the createDOMElement() and updateDOMElement() methods on the TodoItem class to create and update the DOM element for each item.
 
-// Implement the add(), remove(), and update() methods on the TodoList class to add, remove, and update items in the list.
-
-// Test the application by adding and deleting items from the TODO list.
-
-// let todo = new ToDoItem('Homework', 'complete the lab from tuesday.');
-// let todo2 = new ToDoItem('Workout', 'got to the gym and exercide in the evening.')
-
-// let todoContainer = document.querySelector('#todo-list ul');
-// console.log(todoContainer)
-
-// let todoDom = todo.createDOMElement()
-// let todoDom2 = todo2.createDOMElement()
-
-// todoContainer.appendChild(todoDom)
-// todoContainer.appendChild(todoDom2)
