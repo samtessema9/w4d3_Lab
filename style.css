@@ -3,6 +3,10 @@
     font-size: 30px;
 }
 
+body {
+
+}
+
 #header {
     text-align: center;
     margin-bottom: 50px;
@@ -22,6 +26,7 @@ h2 {
     border-radius: 10px;
     width: 40%;
     height: 80vh;
+    background-color: #5F818C99;
 }
 
 form {
@@ -29,6 +34,7 @@ form {
     flex-direction: column;
     text-align: center;
     justify-content: flex-start;
+    align-items: center;
 }
 
 form input {
@@ -38,14 +44,28 @@ form input {
     display: inline-block;
     text-align: center;
     height: 50px;
+    width: 80%;
+    font-family: 'Cabin', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+form input[id="description"] {
+    text-align: left;
 }
 
 form input[type="submit"] {
-    margin-top: 30px;
+    margin-top: 20px;
     width: 100px;
     height: 50px;
     text-align: center;
     align-self: center;
+    background-color: green;
+    color: whitesmoke;
+}
+
+form input[id="description"] {
+    height: 150px;
 }
 
 /* form label {
@@ -66,16 +86,27 @@ ul {
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
+    align-items: center;
 }
 
 
 .todo-item * {
     margin: 0px;
     padding-top: 0px;
+    font-size: 30px;
+    font-weight: 700;
 }
 
 .todo-item input {
-    justify-self: flex-start;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
+
+img {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
 }
 
 
